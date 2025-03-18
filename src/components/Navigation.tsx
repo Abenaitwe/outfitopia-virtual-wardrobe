@@ -1,39 +1,74 @@
 
 import React from 'react';
-import { Camera, Layout, User, Settings } from 'lucide-react';
-import { cn } from "@/lib/utils";
+import { Home, Camera, Shirt, User } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import UserMenu from '@/components/UserMenu';
 
-interface NavigationProps {
+type NavigationProps = {
   currentTab: string;
   onTabChange: (tab: string) => void;
-}
+};
 
 const Navigation = ({ currentTab, onTabChange }: NavigationProps) => {
-  const tabs = [
-    { id: 'scan', icon: Camera, label: 'Scan' },
-    { id: 'wardrobe', icon: Layout, label: 'Wardrobe' },
-    { id: 'profile', icon: User, label: 'Profile' },
-    { id: 'settings', icon: Settings, label: 'Settings' },
-  ];
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const isLoginPage = location.pathname === '/auth';
+
+  // Don't show navigation on login page
+  if (isLoginPage) return null;
+
+  const handleTabClick = (tab: string) => {
+    onTabChange(tab);
+    if (tab === 'profile' && !user) {
+      navigate('/auth');
+    }
+  };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-outfitopia-black border-t border-outfitopia-darkgray">
-      <div className="max-w-md mx-auto flex items-center justify-around">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={cn(
-              "flex flex-col items-center py-3 px-5",
-              currentTab === tab.id ? "text-outfitopia-purple" : "text-outfitopia-gray"
-            )}
-            onClick={() => onTabChange(tab.id)}
-          >
-            <tab.icon className="w-6 h-6 mb-1" />
-            <span className="text-xs">{tab.label}</span>
-          </button>
-        ))}
+    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-purple-500/20 backdrop-blur-md p-4 z-10">
+      <div className="flex justify-between items-center max-w-md mx-auto">
+        <button 
+          onClick={() => handleTabClick('scan')} 
+          className={`flex flex-col items-center ${currentTab === 'scan' ? 'text-purple-500' : 'text-foreground/60'}`}
+        >
+          <Camera size={24} />
+          <span className="text-xs mt-1">Scan</span>
+        </button>
+        
+        <button 
+          onClick={() => handleTabClick('closet')} 
+          className={`flex flex-col items-center ${currentTab === 'closet' ? 'text-purple-500' : 'text-foreground/60'}`}
+        >
+          <Shirt size={24} />
+          <span className="text-xs mt-1">Closet</span>
+        </button>
+        
+        <button 
+          onClick={() => handleTabClick('home')} 
+          className={`flex flex-col items-center ${currentTab === 'home' ? 'text-purple-500' : 'text-foreground/60'}`}
+        >
+          <Home size={24} />
+          <span className="text-xs mt-1">Home</span>
+        </button>
+        
+        <div className="flex flex-col items-center">
+          {user ? (
+            <UserMenu />
+          ) : (
+            <button 
+              onClick={() => handleTabClick('profile')} 
+              className={`flex flex-col items-center ${currentTab === 'profile' ? 'text-purple-500' : 'text-foreground/60'}`}
+            >
+              <User size={24} />
+              <span className="text-xs mt-1">Profile</span>
+            </button>
+          )}
+        </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

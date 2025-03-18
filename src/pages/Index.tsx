@@ -7,6 +7,7 @@ import OutfitSelection from '@/components/OutfitSelection';
 import OutfitPreview from '@/components/OutfitPreview';
 import Navigation from '@/components/Navigation';
 import { toast } from '@/components/ui/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 type AppScreen = 
   | 'welcome'
@@ -20,6 +21,7 @@ const Index = () => {
   const [frontImage, setFrontImage] = useState<string>('');
   const [sideImage, setSideImage] = useState<string>('');
   const [currentTab, setCurrentTab] = useState('scan');
+  const { user } = useAuth();
 
   const handleStart = () => {
     setCurrentScreen('upload-front');
