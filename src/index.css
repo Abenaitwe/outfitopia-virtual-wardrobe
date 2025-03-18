@@ -123,4 +123,28 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  /* Floating animation for product images */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .floating-products > div {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .floating-products > div:nth-child(odd) {
+    animation-delay: 0.5s;
+  }
+
+  .floating-products > div:nth-child(3n) {
+    animation-delay: 1s;
+  }
+
+  .floating-products > div:nth-child(3n+1) {
+    animation-delay: 1.5s;
+  }
 }
+

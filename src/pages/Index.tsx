@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import WelcomeScreen from '@/components/WelcomeScreen';
@@ -25,6 +24,10 @@ const Index = () => {
 
   const handleStart = () => {
     setCurrentScreen('upload-front');
+    toast({
+      title: "Let's create your wishlist",
+      description: "Upload photos to visualize your wishlist items"
+    });
   };
 
   const handleFrontSelfieUpload = (image: string) => {
@@ -107,13 +110,19 @@ const Index = () => {
 
   return (
     <>
-      <Layout className="pb-20">
-        {renderScreen()}
-      </Layout>
-      <Navigation 
-        currentTab={currentTab} 
-        onTabChange={handleTabChange} 
-      />
+      {currentScreen === 'welcome' ? (
+        renderScreen()
+      ) : (
+        <Layout className="pb-20">
+          {renderScreen()}
+        </Layout>
+      )}
+      {currentScreen !== 'welcome' && (
+        <Navigation 
+          currentTab={currentTab} 
+          onTabChange={handleTabChange} 
+        />
+      )}
     </>
   );
 };
