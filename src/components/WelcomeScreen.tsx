@@ -71,9 +71,9 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         
         {/* Text */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-white mb-2">Get Exactly</h1>
-          <h1 className="text-4xl font-bold text-white mb-2">What You</h1>
-          <h1 className="text-4xl font-bold text-white">Wished</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">Discover Your</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">Perfect Fit,</h1>
+          <h1 className="text-4xl font-bold text-white">No Cap</h1>
         </div>
         
         {/* Button */}
