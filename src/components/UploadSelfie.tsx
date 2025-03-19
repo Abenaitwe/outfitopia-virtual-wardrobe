@@ -31,8 +31,8 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
     }
   };
   
-  // Using a local image path that's guaranteed to work
-  const modelImage = '/lovable-uploads/c5937002-a589-4845-be5f-4eb9cd4fc60c.png';
+  // Using the newly uploaded image
+  const modelImage = '/lovable-uploads/cd572067-15d8-4180-9a2f-11c652b257ca.png';
   
   return (
     <div className="flex flex-col h-full">
@@ -58,7 +58,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
             />
           ) : (
             <div className="w-full h-full relative bg-gray-900 flex items-center justify-center">
-              {/* Simplified approach without complex sci-fi elements */}
+              {/* Using the directly uploaded image */}
               <img 
                 src={modelImage} 
                 alt={`${type} selfie example`}
@@ -68,6 +68,12 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
                   setImageError(true);
                 }}
               />
+              
+              {imageError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-white text-center p-4">
+                  <p>Please upload a photo to continue</p>
+                </div>
+              )}
               
               {/* Simple text overlay */}
               <div className="absolute bottom-4 left-0 right-0 text-center text-white font-bold text-xl">
