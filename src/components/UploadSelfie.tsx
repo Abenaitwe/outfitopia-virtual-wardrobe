@@ -78,10 +78,12 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
             onChange={handleImageChange}
             className="hidden"
           />
-          <Button as="span">
-            <Upload className="w-5 h-5 mr-2" />
-            {selectedImage ? 'Continue' : 'Upload or take a selfie'}
-          </Button>
+          <div className="w-full">
+            <Button>
+              <Upload className="w-5 h-5 mr-2" />
+              {selectedImage ? 'Continue' : 'Upload or take a selfie'}
+            </Button>
+          </div>
         </label>
         
         {selectedImage && (
