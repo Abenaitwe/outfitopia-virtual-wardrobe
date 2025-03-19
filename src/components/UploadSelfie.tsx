@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import Button from './Button';
+import { Button } from './ui/button';
 import { ArrowLeft, Camera, Upload } from 'lucide-react';
 
 interface UploadSelfieProps {
@@ -42,7 +42,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
         </h2>
       </div>
       
-      <div className="selfie-container aspect-[3/4] mb-4 flex-shrink-0 max-h-[60vh]">
+      <div className="selfie-container aspect-[3/4] mb-4 flex-shrink-0 max-h-[60vh] overflow-hidden">
         <div className="w-full h-full rounded-3xl overflow-hidden relative">
           {selectedImage ? (
             <img 
@@ -51,11 +51,15 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <>
+            <div className="w-full h-full relative">
               <img 
                 src={modelImage} 
                 alt={`${type} selfie example`}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  console.error('Image failed to load:', e);
+                  e.currentTarget.src = '/placeholder.svg'; // Fallback to placeholder
+                }}
               />
               {/* Sci-fi overlay elements */}
               <div className="absolute inset-0 pointer-events-none">
@@ -79,7 +83,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
                   <div className="text-shadow">Get your perfect fit recommendations</div>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>
