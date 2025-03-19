@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import WelcomeScreen from '@/components/WelcomeScreen';
@@ -41,10 +42,11 @@ const Index = () => {
 
   const handleSideSelfieUpload = (image: string) => {
     setSideImage(image);
+    setCurrentTab('closet'); // Automatically switch to closet tab
     setCurrentScreen('select-outfit');
     toast({
       title: "Side selfie uploaded",
-      description: "Great! Now select an outfit to try on"
+      description: "Great! Now drop your desired outfit"
     });
   };
 
@@ -77,6 +79,7 @@ const Index = () => {
             type="front" 
             onBack={() => setCurrentScreen('welcome')}
             onContinue={handleFrontSelfieUpload}
+            onTabChange={handleTabChange}
           />
         );
       case 'upload-side':
@@ -85,6 +88,7 @@ const Index = () => {
             type="side" 
             onBack={() => setCurrentScreen('upload-front')}
             onContinue={handleSideSelfieUpload}
+            onTabChange={handleTabChange}
           />
         );
       case 'select-outfit':

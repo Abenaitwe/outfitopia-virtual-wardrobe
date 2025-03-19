@@ -7,9 +7,10 @@ interface UploadSelfieProps {
   type: 'front' | 'side';
   onBack: () => void;
   onContinue: (image: string) => void;
+  onTabChange?: (tab: string) => void; // New prop to allow changing tabs
 }
 
-const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
+const UploadSelfie = ({ type, onBack, onContinue, onTabChange }: UploadSelfieProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
   
@@ -29,6 +30,16 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
         }
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleContinue = () => {
+    if (selectedImage) {
+      onContinue(selectedImage);
+      // Navigate to closet tab if onTabChange is provided
+      if (onTabChange) {
+        onTabChange('closet');
+      }
     }
   };
   
@@ -82,7 +93,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
       <div className="mt-auto space-y-4 pb-4">
         {selectedImage && (
           <Button 
-            onClick={() => onContinue(selectedImage)}
+            onClick={handleContinue}
             className="w-full"
           >
             Continue
