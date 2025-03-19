@@ -25,13 +25,12 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
     }
   };
   
-  const placeholderImage = type === 'front' 
-    ? '/lovable-uploads/454958ca-1d1d-4772-8e04-67ed3036bfe6.png'
-    : '/lovable-uploads/90020579-9e5e-4a5b-8f3e-9aa3244b5e8a.png';
+  // Use the new woman image for both front and side views
+  const womanImage = '/lovable-uploads/55cbdf6d-0e22-4cb3-a298-8127e0c7a1ac.png';
   
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center mb-6">
+      <div className="flex items-center mb-4">
         <button 
           onClick={onBack}
           className="p-2"
@@ -39,12 +38,12 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
           <ArrowLeft className="w-6 h-6 text-white" />
         </button>
         <h2 className="text-2xl font-semibold text-white ml-2">
-          Upload a {type} selfie
+          {type === 'front' ? 'Facial Analysis' : 'Profile Analysis'}
         </h2>
       </div>
       
-      <div className="selfie-container aspect-[3/4] mb-6">
-        <div className="w-full h-full rounded-3xl overflow-hidden">
+      <div className="selfie-container aspect-[3/4] mb-4 flex-shrink-0 max-h-[60vh]">
+        <div className="w-full h-full rounded-3xl overflow-hidden relative">
           {selectedImage ? (
             <img 
               src={selectedImage} 
@@ -52,16 +51,40 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <img 
-              src={placeholderImage} 
-              alt={`${type} selfie example`}
-              className="w-full h-full object-cover opacity-80"
-            />
+            <>
+              <img 
+                src={womanImage} 
+                alt={`${type} selfie example`}
+                className="w-full h-full object-cover"
+              />
+              {/* Sci-fi overlay elements */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Facial mesh grid */}
+                <div className="absolute inset-0 bg-[url('/lovable-uploads/499c6fd7-ae34-4d2b-aa9b-0a938e5eff40.png')] bg-cover opacity-30"></div>
+                
+                {/* Scan lines */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-outfitopia-purple/20 to-transparent animate-pulse-light"></div>
+                
+                {/* Facial tracking points */}
+                <div className="absolute inset-0">
+                  <div className="absolute left-1/2 top-[30%] w-2 h-2 rounded-full bg-outfitopia-purple opacity-80" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                  <div className="absolute left-[45%] top-[30%] w-1 h-1 rounded-full bg-outfitopia-purple opacity-70" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                  <div className="absolute left-[55%] top-[30%] w-1 h-1 rounded-full bg-outfitopia-purple opacity-70" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                  <div className="absolute left-1/2 top-[38%] w-1 h-1 rounded-full bg-outfitopia-purple opacity-70" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                  <div className="absolute left-1/2 top-[45%] w-1.5 h-1.5 rounded-full bg-outfitopia-purple opacity-80" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                </div>
+                
+                {/* Text overlay */}
+                <div className="absolute bottom-4 left-0 right-0 text-center text-white font-bold text-xl">
+                  <div className="text-shadow">Get your perfect fit recommendations</div>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>
       
-      <div className="mt-auto space-y-4">
+      <div className="mt-auto space-y-4 pb-4">
         {selectedImage && (
           <Button 
             variant="secondary" 
