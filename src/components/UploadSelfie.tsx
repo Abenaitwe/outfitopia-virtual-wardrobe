@@ -96,13 +96,15 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
             accept="image/*"
             onChange={handleImageChange}
             className="hidden"
+            id="upload-selfie"
           />
-          <div className="w-full">
-            <Button className="w-full">
-              <Upload className="w-5 h-5 mr-2" />
-              {selectedImage ? 'Continue' : 'Upload or take a selfie'}
-            </Button>
-          </div>
+          <Button 
+            className="w-full"
+            onClick={() => document.getElementById('upload-selfie')?.click()}
+          >
+            <Upload className="w-5 h-5 mr-2" />
+            Drop your Pic
+          </Button>
         </label>
         
         {selectedImage && (
