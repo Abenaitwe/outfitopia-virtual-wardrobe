@@ -82,6 +82,15 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
       <div className="mt-auto space-y-4 pb-4">
         {selectedImage && (
           <Button 
+            onClick={() => onContinue(selectedImage)}
+            className="w-full"
+          >
+            Continue
+          </Button>
+        )}
+        
+        {selectedImage && (
+          <Button 
             variant="secondary" 
             onClick={() => setSelectedImage(null)}
             className="w-full"
@@ -90,30 +99,23 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
           </Button>
         )}
         
-        <label className="block">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-            id="upload-selfie"
-          />
-          <Button 
-            className="w-full"
-            onClick={() => document.getElementById('upload-selfie')?.click()}
-          >
-            <Upload className="w-5 h-5 mr-2" />
-            Drop your Pic
-          </Button>
-        </label>
-        
-        {selectedImage && (
-          <Button 
-            onClick={() => onContinue(selectedImage)}
-            className="w-full"
-          >
-            Continue
-          </Button>
+        {!selectedImage && (
+          <label className="block">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+              id="upload-selfie"
+            />
+            <Button 
+              className="w-full"
+              onClick={() => document.getElementById('upload-selfie')?.click()}
+            >
+              <Upload className="w-5 h-5 mr-2" />
+              Drop your Pic
+            </Button>
+          </label>
         )}
       </div>
     </div>
