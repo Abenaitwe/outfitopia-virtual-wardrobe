@@ -25,14 +25,15 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
       reader.onload = (event) => {
         if (event.target?.result) {
           setSelectedImage(event.target.result as string);
+          setImageError(false); // Reset error state when new image is selected
         }
       };
       reader.readAsDataURL(file);
     }
   };
   
-  // Using the newly uploaded image
-  const modelImage = '/lovable-uploads/cd572067-15d8-4180-9a2f-11c652b257ca.png';
+  // Instead of using an external image that might not load, let's create a UI placeholder
+  // This doesn't rely on external images that could fail to load
   
   return (
     <div className="flex flex-col h-full">
@@ -57,25 +58,19 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full relative bg-gray-900 flex items-center justify-center">
-              {/* Using the directly uploaded image */}
-              <img 
-                src={modelImage} 
-                alt={`${type} selfie example`}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  console.error("Image failed to load:", e.currentTarget.src);
-                  setImageError(true);
-                }}
-              />
+            <div className="w-full h-full relative bg-gray-800 flex items-center justify-center">
+              {/* Placeholder design that doesn't rely on external images */}
+              <div className="text-center p-6">
+                <Camera className="w-16 h-16 text-primary mx-auto mb-4" />
+                <p className="text-white text-lg font-medium mb-2">
+                  Upload your {type === 'front' ? 'front facing' : 'profile'} photo
+                </p>
+                <p className="text-gray-400 text-sm">
+                  This helps us provide accurate recommendations for your body type
+                </p>
+              </div>
               
-              {imageError && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-white text-center p-4">
-                  <p>Please upload a photo to continue</p>
-                </div>
-              )}
-              
-              {/* Simple text overlay */}
+              {/* Text overlay at bottom */}
               <div className="absolute bottom-4 left-0 right-0 text-center text-white font-bold text-xl">
                 <div className="text-shadow">Get your perfect fit recommendations</div>
               </div>
@@ -89,8 +84,9 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
           <Button 
             variant="secondary" 
             onClick={() => setSelectedImage(null)}
+            className="w-full"
           >
-            Use Another
+            Use Another Photo
           </Button>
         )}
         
@@ -112,6 +108,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
         {selectedImage && (
           <Button 
             onClick={() => onContinue(selectedImage)}
+            className="w-full"
           >
             Continue
           </Button>
