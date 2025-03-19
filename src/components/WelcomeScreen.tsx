@@ -81,7 +81,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           onClick={onStart}
           className="flex items-center justify-center gap-2 bg-white/30 backdrop-blur-sm text-white font-semibold py-3 px-6 rounded-full w-full"
         >
-          <Plus size={20} /> Create Wishlist
+          <Plus size={20} /> Get Started
         </button>
       </div>
     </div>
