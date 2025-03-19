@@ -25,8 +25,8 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
     }
   };
   
-  // Use the new model image
-  const modelImage = '/lovable-uploads/06c6d034-f985-4bcb-be01-2d0f83c84737.png';
+  // Use the newly uploaded model image
+  const modelImage = '/lovable-uploads/ca8ea595-e303-43ae-8526-1a0cd170be86.png';
   
   return (
     <div className="flex flex-col h-full">
