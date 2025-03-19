@@ -25,8 +25,8 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
     }
   };
   
-  // Use the new woman image for both front and side views
-  const womanImage = '/lovable-uploads/55cbdf6d-0e22-4cb3-a298-8127e0c7a1ac.png';
+  // Use the new model image
+  const modelImage = '/lovable-uploads/06c6d034-f985-4bcb-be01-2d0f83c84737.png';
   
   return (
     <div className="flex flex-col h-full">
@@ -53,7 +53,7 @@ const UploadSelfie = ({ type, onBack, onContinue }: UploadSelfieProps) => {
           ) : (
             <>
               <img 
-                src={womanImage} 
+                src={modelImage} 
                 alt={`${type} selfie example`}
                 className="w-full h-full object-cover"
               />
