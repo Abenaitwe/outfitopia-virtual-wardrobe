@@ -36,21 +36,26 @@ serve(async (req) => {
     // Process the selfie image - already in base64 format from the client
     let processedSelfieImage = selfieImage;
     if (selfieImage.startsWith('data:')) {
-      processedSelfieImage = selfieImage.replace(/^data:image\/[a-z]+;base64,/, '');
+      processedSelfieImage = selfieImage.split(',')[1];
     }
     
     // Process the outfit image - could be a URL or base64
     let processedOutfitImage;
     if (outfitImage.startsWith('data:')) {
       // Already base64 data URL
-      processedOutfitImage = outfitImage.replace(/^data:image\/[a-z]+;base64,/, '');
+      processedOutfitImage = outfitImage.split(',')[1];
     } else if (outfitImage.startsWith('/')) {
       // It's a path to an image, we need to fetch it
       try {
         // Get the host URL from request headers
         const host = req.headers.get('host') || '';
-        const protocol = host.includes('localhost') ? 'http' : 'https';
-        const baseUrl = `${protocol}://${host}`;
+        const origin = req.headers.get('origin') || '';
+        let baseUrl = origin;
+        
+        if (!baseUrl && host) {
+          const protocol = host.includes('localhost') ? 'http' : 'https';
+          baseUrl = `${protocol}://${host}`;
+        }
         
         // Fetch the image
         console.log(`Fetching outfit image from: ${baseUrl}${outfitImage}`);
@@ -62,10 +67,7 @@ serve(async (req) => {
         
         // Convert the image to base64
         const imageArrayBuffer = await imageResponse.arrayBuffer();
-        const imageBase64 = btoa(
-          new Uint8Array(imageArrayBuffer)
-            .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        );
+        const imageBase64 = btoa(String.fromCharCode(...new Uint8Array(imageArrayBuffer)));
         processedOutfitImage = imageBase64;
       } catch (error) {
         console.error('Error fetching outfit image:', error);
@@ -76,44 +78,56 @@ serve(async (req) => {
       processedOutfitImage = outfitImage;
     }
 
-    console.log('Requesting virtual try-on with Gemini 2.0 API...');
-
-    // Call the Gemini 2.0 API with the image generation model
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=' + GEMINI_API_KEY, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [
+    // Create content for Gemini API in the correct format
+    const contents = [
+      {
+        parts: [
           {
-            parts: [
-              {
-                text: "Here is a person and an outfit. Generate a realistic image of this person wearing this exact outfit. Make it photorealistic and ensure the person's face and features are preserved exactly."
-              },
-              {
-                inline_data: {
-                  mime_type: "image/jpeg",
-                  data: processedSelfieImage
-                }
-              },
-              {
-                inline_data: {
-                  mime_type: "image/jpeg",
-                  data: processedOutfitImage
-                }
-              }
-            ]
+            text: "Generate a realistic image of this person wearing this exact outfit. Make it photorealistic and ensure the person's face and features are preserved exactly."
+          },
+          {
+            inline_data: {
+              mime_type: "image/jpeg",
+              data: processedSelfieImage
+            }
+          },
+          {
+            inline_data: {
+              mime_type: "image/jpeg",
+              data: processedOutfitImage
+            }
           }
-        ],
-        generationConfig: {
-          responseModalities: ['Text', 'Image'],
-          temperature: 0.4,
-          topK: 32,
-          topP: 1,
-        }
-      }),
-    });
+        ]
+      }
+    ];
+
+    console.log('Requesting virtual try-on with Gemini API...');
+
+    // Call the Gemini API using the proper format for image generation
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEMINI_API_KEY}`, 
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents,
+          generationConfig: {
+            responseModalities: ['Text', 'Image'],
+            temperature: 0.4,
+            topK: 32,
+            topP: 1,
+          }
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Error response from Gemini API:', errorText);
+      throw new Error(`Gemini API returned status ${response.status}: ${errorText}`);
+    }
 
     const data = await response.json();
     console.log('Gemini API response received');
@@ -122,7 +136,7 @@ serve(async (req) => {
     let generatedImage = null;
     try {
       // Check if response contains an image in the candidates
-      if (data.candidates && data.candidates[0].content.parts) {
+      if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts) {
         for (const part of data.candidates[0].content.parts) {
           if (part.inlineData) {
             generatedImage = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
@@ -132,6 +146,7 @@ serve(async (req) => {
       }
     } catch (err) {
       console.error('Error extracting image from Gemini response:', err);
+      console.log('Response structure:', JSON.stringify(data));
     }
 
     // If no image was found in the response

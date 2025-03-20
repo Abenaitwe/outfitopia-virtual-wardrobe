@@ -19,18 +19,16 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedOutfitImage, setSelectedOutfitImage] = useState<string>('/lovable-uploads/23e66cbc-598c-4cd3-b892-1e8262da9286.png');
 
-  // Generate the try-on image when component mounts
+  // Generate the try-on image when component mounts or when outfit changes
   useEffect(() => {
     handleGenerateTryOn();
-  }, []);
+  }, [selectedOutfitImage]);
 
   const handleSelectOutfit = (outfitImage: string) => {
+    if (selectedOutfitImage === outfitImage) return;
+    
     setSelectedOutfitImage(outfitImage);
     setGeneratedImage(null); // Clear previous image
-    // Add a small delay to allow state to update
-    setTimeout(() => {
-      handleGenerateTryOn(); // Generate new image with selected outfit
-    }, 100);
   };
 
   const handleGenerateTryOn = async () => {
@@ -40,9 +38,6 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
     const result = await generateTryOnImage(frontImage, selectedOutfitImage);
     if (result) {
       setGeneratedImage(result);
-    } else {
-      // Fall back to showing the original selfie
-      setGeneratedImage(frontImage);
     }
     setIsGenerating(false);
   };
