@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, Upload } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 interface OutfitSelectionProps {
   onBack: () => void;
@@ -9,12 +10,45 @@ interface OutfitSelectionProps {
 }
 
 const OutfitSelection = ({ onBack, onSelectOutfit }: OutfitSelectionProps) => {
+  const [uploadedOutfit, setUploadedOutfit] = useState<string | null>(null);
+  const [uploadedOutfitName, setUploadedOutfitName] = useState("My Custom Outfit");
+  
   const outfits = [
     { id: 'outfit1', name: 'Casual Streetwear', image: '/lovable-uploads/23e66cbc-598c-4cd3-b892-1e8262da9286.png' },
     { id: 'outfit2', name: 'Business Casual', image: '/lovable-uploads/8922a0f5-2f69-4e95-a32f-f478a25ba9fb.png' },
     { id: 'outfit3', name: 'Formal Attire', image: '/lovable-uploads/6f7bc91c-601b-4d1d-b752-b0d7eafca831.png' },
     { id: 'outfit4', name: 'Athletic Wear', image: '/lovable-uploads/96150a95-f1b9-49dc-9619-b83f86d2dc62.png' },
   ];
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            setUploadedOutfit(event.target.result as string);
+            toast({
+              title: "Outfit uploaded",
+              description: "Your outfit is ready to try on!"
+            });
+          }
+        };
+        reader.readAsDataURL(file);
+      } else {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload an image file",
+          variant: "destructive"
+        });
+      }
+    }
+  };
+
+  // Combine uploaded outfit with predefined outfits
+  const allOutfits = uploadedOutfit 
+    ? [{ id: 'custom', name: uploadedOutfitName, image: uploadedOutfit }, ...outfits]
+    : outfits;
 
   return (
     <div className="flex flex-col h-full">
@@ -30,8 +64,29 @@ const OutfitSelection = ({ onBack, onSelectOutfit }: OutfitSelectionProps) => {
         </h2>
       </div>
       
+      {/* Upload button - prominently displayed at the top */}
+      <div className="mb-6">
+        <label className="block w-full">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            className="hidden"
+            id="upload-outfit"
+          />
+          <Button 
+            variant="primary"
+            onClick={() => document.getElementById('upload-outfit')?.click()}
+            className="flex items-center justify-center w-full py-3 bg-outfitopia-purple hover:bg-outfitopia-purple/90"
+          >
+            <Upload className="w-5 h-5 mr-2" />
+            Drop your own fit
+          </Button>
+        </label>
+      </div>
+      
       <div className="grid grid-cols-2 gap-4 mb-6">
-        {outfits.map((outfit) => (
+        {allOutfits.map((outfit) => (
           <div 
             key={outfit.id}
             className="bg-outfitopia-darkgray rounded-xl overflow-hidden"
@@ -73,7 +128,7 @@ const OutfitSelection = ({ onBack, onSelectOutfit }: OutfitSelectionProps) => {
       </div>
       
       <div className="mt-auto">
-        <Button onClick={() => onSelectOutfit('outfit1')}>
+        <Button onClick={() => onSelectOutfit(uploadedOutfit ? 'custom' : 'outfit1')}>
           Try on Selected Outfit
         </Button>
       </div>
