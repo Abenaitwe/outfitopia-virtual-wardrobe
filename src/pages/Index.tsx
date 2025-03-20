@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import WelcomeScreen from '@/components/WelcomeScreen';
@@ -19,7 +20,20 @@ const Index = () => {
   const [frontImage, setFrontImage] = useState<string>('');
   const [sideImage, setSideImage] = useState<string>(''); // Keep for compatibility with OutfitPreview
   const [currentTab, setCurrentTab] = useState('scan');
+  const [selectedOutfitId, setSelectedOutfitId] = useState<string>('outfit1');
   const { user } = useAuth();
+
+  // Map outfitId to outfit image URL
+  const getOutfitImageById = (outfitId: string) => {
+    const outfitMap: Record<string, string> = {
+      'outfit1': '/lovable-uploads/23e66cbc-598c-4cd3-b892-1e8262da9286.png',
+      'outfit2': '/lovable-uploads/8922a0f5-2f69-4e95-a32f-f478a25ba9fb.png',
+      'outfit3': '/lovable-uploads/6f7bc91c-601b-4d1d-b752-b0d7eafca831.png',
+      'outfit4': '/lovable-uploads/96150a95-f1b9-49dc-9619-b83f86d2dc62.png',
+    };
+    
+    return outfitMap[outfitId] || (outfitId === 'custom' ? 'custom' : '/lovable-uploads/23e66cbc-598c-4cd3-b892-1e8262da9286.png');
+  };
 
   const handleStart = () => {
     setCurrentScreen('upload-front');
@@ -41,10 +55,11 @@ const Index = () => {
   };
 
   const handleOutfitSelection = (outfitId: string) => {
+    setSelectedOutfitId(outfitId);
     setCurrentScreen('preview-outfit');
     toast({
-      title: "Outfit applied",
-      description: "See how this outfit looks on you!"
+      title: "Outfit selected",
+      description: "Generating your virtual try-on..."
     });
   };
 
