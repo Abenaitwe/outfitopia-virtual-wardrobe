@@ -76,10 +76,10 @@ serve(async (req) => {
       processedOutfitImage = outfitImage;
     }
 
-    console.log('Requesting virtual try-on with Gemini API...');
+    console.log('Requesting virtual try-on with Gemini 2.0 API...');
 
-    // Call the Gemini API with the gemini-pro-vision model
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=' + GEMINI_API_KEY, {
+    // Call the Gemini 2.0 API with the image generation model
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=' + GEMINI_API_KEY, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ serve(async (req) => {
           {
             parts: [
               {
-                text: "Generate an image of the person in the first image wearing the clothing item from the second image. Make it look natural and realistic. Generate only the image, no text."
+                text: "Here is a person and an outfit. Generate a realistic image of this person wearing this exact outfit. Make it photorealistic and ensure the person's face and features are preserved exactly."
               },
               {
                 inline_data: {
@@ -107,10 +107,10 @@ serve(async (req) => {
           }
         ],
         generationConfig: {
+          responseModalities: ['Text', 'Image'],
           temperature: 0.4,
           topK: 32,
           topP: 1,
-          maxOutputTokens: 4096,
         }
       }),
     });
@@ -121,11 +121,11 @@ serve(async (req) => {
     // Extract the generated image if available
     let generatedImage = null;
     try {
-      // Check if response contains an image
+      // Check if response contains an image in the candidates
       if (data.candidates && data.candidates[0].content.parts) {
         for (const part of data.candidates[0].content.parts) {
-          if (part.inline_data && part.inline_data.mime_type.startsWith('image/')) {
-            generatedImage = `data:${part.inline_data.mime_type};base64,${part.inline_data.data}`;
+          if (part.inlineData) {
+            generatedImage = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
             break;
           }
         }
