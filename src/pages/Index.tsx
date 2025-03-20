@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import WelcomeScreen from '@/components/WelcomeScreen';
@@ -12,14 +11,13 @@ import { useAuth } from '@/contexts/AuthContext';
 type AppScreen = 
   | 'welcome'
   | 'upload-front'
-  | 'upload-side'
   | 'select-outfit'
   | 'preview-outfit';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('welcome');
   const [frontImage, setFrontImage] = useState<string>('');
-  const [sideImage, setSideImage] = useState<string>('');
+  const [sideImage, setSideImage] = useState<string>(''); // Keep for compatibility with OutfitPreview
   const [currentTab, setCurrentTab] = useState('scan');
   const { user } = useAuth();
 
@@ -33,19 +31,11 @@ const Index = () => {
 
   const handleFrontSelfieUpload = (image: string) => {
     setFrontImage(image);
-    setCurrentScreen('upload-side');
-    toast({
-      title: "Front selfie uploaded",
-      description: "Now let's get a side view for better results"
-    });
-  };
-
-  const handleSideSelfieUpload = (image: string) => {
-    setSideImage(image);
+    // Skip side selfie and go straight to closet
     setCurrentTab('closet'); // Automatically switch to closet tab
     setCurrentScreen('select-outfit');
     toast({
-      title: "Side selfie uploaded",
+      title: "Selfie uploaded",
       description: "Great! Now drop your desired outfit"
     });
   };
@@ -82,19 +72,10 @@ const Index = () => {
             onTabChange={handleTabChange}
           />
         );
-      case 'upload-side':
-        return (
-          <UploadSelfie 
-            type="side" 
-            onBack={() => setCurrentScreen('upload-front')}
-            onContinue={handleSideSelfieUpload}
-            onTabChange={handleTabChange}
-          />
-        );
       case 'select-outfit':
         return (
           <OutfitSelection 
-            onBack={() => setCurrentScreen('upload-side')}
+            onBack={() => setCurrentScreen('upload-front')}
             onSelectOutfit={handleOutfitSelection}
           />
         );
@@ -102,7 +83,7 @@ const Index = () => {
         return (
           <OutfitPreview 
             frontImage={frontImage}
-            sideImage={sideImage}
+            sideImage={frontImage} // Use frontImage for both to ensure preview works
             onBack={() => setCurrentScreen('select-outfit')}
             onSelectOutfit={() => setCurrentScreen('select-outfit')}
           />
