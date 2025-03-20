@@ -39,6 +39,10 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
     });
 
     try {
+      console.log('Sending try-on request with:');
+      console.log('- Selfie image:', frontImage.substring(0, 50) + '...');
+      console.log('- Outfit image:', selectedOutfitImage);
+
       const { data, error } = await supabase.functions.invoke('virtual-tryon', {
         body: {
           selfieImage: frontImage,
@@ -47,10 +51,12 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
       });
 
       if (error) {
+        console.error('Supabase function error:', error);
         throw new Error(error.message);
       }
 
       if (data.error) {
+        console.error('Function returned error:', data.error);
         throw new Error(data.error);
       }
 
@@ -80,7 +86,10 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
   const handleSelectOutfit = (outfitImage: string) => {
     setSelectedOutfitImage(outfitImage);
     setGeneratedImage(null); // Clear previous image
-    generateTryOnImage(); // Generate new image with selected outfit
+    // Add a small delay to allow state to update
+    setTimeout(() => {
+      generateTryOnImage(); // Generate new image with selected outfit
+    }, 100);
   };
 
   return (

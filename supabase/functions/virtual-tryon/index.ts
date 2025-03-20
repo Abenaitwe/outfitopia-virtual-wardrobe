@@ -31,6 +31,51 @@ serve(async (req) => {
       );
     }
 
+    console.log('Processing images for virtual try-on...');
+    
+    // Process the selfie image - already in base64 format from the client
+    let processedSelfieImage = selfieImage;
+    if (selfieImage.startsWith('data:')) {
+      processedSelfieImage = selfieImage.replace(/^data:image\/[a-z]+;base64,/, '');
+    }
+    
+    // Process the outfit image - could be a URL or base64
+    let processedOutfitImage;
+    if (outfitImage.startsWith('data:')) {
+      // Already base64 data URL
+      processedOutfitImage = outfitImage.replace(/^data:image\/[a-z]+;base64,/, '');
+    } else if (outfitImage.startsWith('/')) {
+      // It's a path to an image, we need to fetch it
+      try {
+        // Get the host URL from request headers
+        const host = req.headers.get('host') || '';
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        const baseUrl = `${protocol}://${host}`;
+        
+        // Fetch the image
+        console.log(`Fetching outfit image from: ${baseUrl}${outfitImage}`);
+        const imageResponse = await fetch(`${baseUrl}${outfitImage}`);
+        
+        if (!imageResponse.ok) {
+          throw new Error(`Failed to fetch outfit image: ${imageResponse.status}`);
+        }
+        
+        // Convert the image to base64
+        const imageArrayBuffer = await imageResponse.arrayBuffer();
+        const imageBase64 = btoa(
+          new Uint8Array(imageArrayBuffer)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+        );
+        processedOutfitImage = imageBase64;
+      } catch (error) {
+        console.error('Error fetching outfit image:', error);
+        throw new Error(`Failed to process outfit image: ${error.message}`);
+      }
+    } else {
+      // Assume it's already base64 without the data URL prefix
+      processedOutfitImage = outfitImage;
+    }
+
     console.log('Requesting virtual try-on with Gemini API...');
 
     // Call the Gemini API with the gemini-pro-vision model
@@ -49,13 +94,13 @@ serve(async (req) => {
               {
                 inline_data: {
                   mime_type: "image/jpeg",
-                  data: selfieImage.replace(/^data:image\/[a-z]+;base64,/, '')
+                  data: processedSelfieImage
                 }
               },
               {
                 inline_data: {
                   mime_type: "image/jpeg",
-                  data: outfitImage.replace(/^data:image\/[a-z]+;base64,/, '')
+                  data: processedOutfitImage
                 }
               }
             ]
