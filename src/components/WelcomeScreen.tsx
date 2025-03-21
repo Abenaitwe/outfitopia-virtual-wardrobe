@@ -17,40 +17,40 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       <div className="floating-products">
         {/* Top row */}
         <div className="absolute top-0 left-4 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Banana" className="w-16 h-16 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/b80ac5fb-dbdc-41ec-b41a-364d1f7c7f1c.png" alt="Knitted cardigan" className="w-16 h-16 object-cover rounded-2xl" />
         </div>
         <div className="absolute top-12 right-8 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Person" className="w-16 h-16 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/15e13488-84f0-493f-8bcf-37912404bfb1.png" alt="Blue cardigan" className="w-16 h-16 object-cover rounded-2xl" />
         </div>
         
         {/* Middle row left */}
         <div className="absolute top-1/4 left-12 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Shoes" className="w-20 h-20 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/1104a7a7-4a98-423e-b569-c4447b4aee3c.png" alt="Crop top outfit" className="w-20 h-20 object-cover rounded-2xl" />
         </div>
         <div className="absolute bottom-1/3 left-20 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Sunglasses" className="w-20 h-20 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/14518733-64cc-4f99-be2c-7ad571a43368.png" alt="Green polo" className="w-20 h-20 object-cover rounded-2xl" />
         </div>
         <div className="absolute bottom-1/4 left-8 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Earrings" className="w-16 h-16 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/fb921fc3-d545-454c-a0cf-157b3b12c71a.png" alt="Zipper polo" className="w-16 h-16 object-cover rounded-2xl" />
         </div>
         
         {/* Middle row right */}
         <div className="absolute top-1/4 right-12 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Heart" className="w-16 h-16 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/22d4f7ce-42fd-40f7-ac39-6f8c5ae5dc04.png" alt="Olive outfit" className="w-16 h-16 object-cover rounded-2xl" />
         </div>
         <div className="absolute top-1/3 right-4 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Handbag" className="w-20 h-20 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/f3d3c3d7-8481-4178-b51c-d80c35cff16f.png" alt="Pink outfit" className="w-20 h-20 object-cover rounded-2xl" />
         </div>
         
         {/* Bottom row */}
         <div className="absolute bottom-20 left-12 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Box" className="w-20 h-20 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/d6caae61-8897-4469-9d50-0fdb7542b866.png" alt="Beige outfit" className="w-20 h-20 object-cover rounded-2xl" />
         </div>
         <div className="absolute bottom-32 right-12 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Glasses" className="w-20 h-20 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/1b0f0397-b4e9-4dc4-93ce-7eecab2247aa.png" alt="Elegant dress" className="w-20 h-20 object-cover rounded-2xl" />
         </div>
         <div className="absolute bottom-16 right-20 bg-white rounded-3xl p-2 shadow-md">
-          <img src="/lovable-uploads/9b4042db-ca6a-4d14-b328-44a56aa470ca.png" alt="Sweater" className="w-16 h-16 object-cover rounded-2xl" />
+          <img src="/lovable-uploads/6e9a743c-d190-447c-96f7-2d6c39e7272a.png" alt="Wide jeans" className="w-16 h-16 object-cover rounded-2xl" />
         </div>
       </div>
       
