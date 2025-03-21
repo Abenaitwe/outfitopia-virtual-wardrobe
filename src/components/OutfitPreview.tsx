@@ -21,20 +21,25 @@ const OutfitPreview = ({ frontImage, sideImage, onBack, onSelectOutfit }: Outfit
 
   // Generate the try-on image when component mounts or when outfit changes
   useEffect(() => {
-    handleGenerateTryOn();
+    if (selectedOutfitImage) {
+      console.log('Selected outfit image changed:', selectedOutfitImage);
+      handleGenerateTryOn();
+    }
   }, [selectedOutfitImage]);
 
   const handleSelectOutfit = (outfitImage: string) => {
     if (selectedOutfitImage === outfitImage) return;
     
+    console.log('Setting selected outfit to:', outfitImage);
     setSelectedOutfitImage(outfitImage);
     setGeneratedImage(null); // Clear previous image
   };
 
   const handleGenerateTryOn = async () => {
-    if (isGenerating) return;
+    if (isGenerating || !selectedOutfitImage) return;
     
     setIsGenerating(true);
+    console.log('Generating try-on with:', frontImage, selectedOutfitImage);
     const result = await generateTryOnImage(frontImage, selectedOutfitImage);
     if (result) {
       setGeneratedImage(result);

@@ -28,6 +28,7 @@ const OutfitOptions = ({ selectedOutfitImage, onSelectOutfit }: OutfitOptionsPro
             src={outfitImage} 
             alt={`Outfit option ${index + 1}`} 
             className="w-full h-full object-cover rounded-lg"
+            loading="eager"
           />
         </div>
       ))}
