@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { LockKeyhole } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
