@@ -100,12 +100,15 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl'} font-bold text-white`}>No Cap</h1>
         </div>
         
-        {/* Button */}
+        {/* Button - Updated to match the image style */}
         <button 
           onClick={onStart}
-          className={`flex items-center justify-center gap-2 bg-white/30 backdrop-blur-sm text-white font-semibold ${isMobile ? 'py-2.5 px-5' : 'py-3 px-6'} rounded-full w-full`}
+          className={`flex items-center justify-center gap-2 bg-[#e0f3e0] text-[#1a331a] font-medium ${isMobile ? 'py-3 px-6' : 'py-4 px-8'} 
+          rounded-full w-full border border-[#d1e9d1] shadow-lg hover:shadow-xl transition-all 
+          hover:bg-[#d5eed5] active:scale-[0.98]`}
         >
-          <Plus size={isMobile ? 18 : 20} /> Get Started
+          <Plus size={isMobile ? 18 : 20} className="text-[#1a331a]" /> 
+          Get Started
         </button>
       </div>
     </div>
