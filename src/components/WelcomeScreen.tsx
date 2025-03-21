@@ -30,13 +30,13 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               <img src="/lovable-uploads/3bf66d06-9092-454c-8037-263c1b16957e.png" alt="Knitwear outfit" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom left - women's outfit - positioned lower */}
-            <div className="absolute bottom-[5%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
+            {/* Bottom left - women's outfit - positioned even lower */}
+            <div className="absolute bottom-[2%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/c87c850b-e173-4851-bc0b-b5594c389b56.png" alt="Black top white pants" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom right - women's outfit - positioned lower */}
-            <div className="absolute bottom-[5%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
+            {/* Bottom right - women's outfit - positioned even lower */}
+            <div className="absolute bottom-[2%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/ddb9e997-839c-4b0c-9180-e9c9c26c0964.png" alt="Pink top white pants" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
           </>
