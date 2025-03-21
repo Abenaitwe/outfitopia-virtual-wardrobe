@@ -1,25 +1,22 @@
-
 import React from 'react';
 import { LockKeyhole } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-
 interface WelcomeScreenProps {
   onStart: () => void;
 }
-
-const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
+const WelcomeScreen = ({
+  onStart
+}: WelcomeScreenProps) => {
   const isMobile = useIsMobile();
-
-  return (
-    <div className="relative flex flex-col items-center justify-center h-full min-h-screen overflow-hidden">
+  return <div className="relative flex flex-col items-center justify-center h-full min-h-screen overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 -z-10"></div>
       
       {/* Floating product images with different layout for mobile */}
       <div className="floating-products absolute inset-0 pointer-events-none">
-        {isMobile ? (
-          // Mobile layout - focus on corners and top/bottom to avoid center content
-          <>
+        {isMobile ?
+      // Mobile layout - focus on corners and top/bottom to avoid center content
+      <>
             {/* Top left - men's outfit */}
             <div className="absolute top-[2%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/fa3bc1ae-171c-4ece-afd7-1c37c903f081.png" alt="Blue cardigan outfit" className="w-20 h-20 object-cover rounded-2xl" />
@@ -39,10 +36,9 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             <div className="absolute bottom-[1%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/ddb9e997-839c-4b0c-9180-e9c9c26c0964.png" alt="Pink top white pants" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
-          </>
-        ) : (
-          // Desktop layout - spread images around the screen
-          <>
+          </> :
+      // Desktop layout - spread images around the screen
+      <>
             {/* Left column */}
             <div className="absolute top-[15%] left-[10%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/b80ac5fb-dbdc-41ec-b41a-364d1f7c7f1c.png" alt="Knitted cardigan" className="w-32 h-32 object-cover rounded-2xl" />
@@ -78,8 +74,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             <div className="absolute top-[55%] right-[30%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/6e9a743c-d190-447c-96f7-2d6c39e7272a.png" alt="Wide jeans" className="w-32 h-32 object-cover rounded-2xl" />
             </div>
-          </>
-        )}
+          </>}
       </div>
       
       {/* Center content */}
@@ -101,20 +96,15 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         </div>
         
         {/* Button - Updated to exactly match the image */}
-        <button 
-          onClick={onStart}
-          className={`flex items-center justify-center gap-3 bg-gradient-to-r from-[#f0f1f6] to-[#e6e7ec] text-black font-medium ${isMobile ? 'py-3.5 px-6' : 'py-4 px-8'} 
+        <button onClick={onStart} className={`flex items-center justify-center gap-3 bg-gradient-to-r from-[#f0f1f6] to-[#e6e7ec] text-black font-medium ${isMobile ? 'py-3.5 px-6' : 'py-4 px-8'} 
           rounded-full w-full border border-white/60 shadow-[0_8px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_20px_rgba(0,0,0,0.15)] transition-all 
-          active:scale-[0.98]`}
-        >
+          active:scale-[0.98]`}>
           <div className="bg-white p-2 rounded-full flex items-center justify-center border border-[#e0e1e6]">
             <LockKeyhole size={isMobile ? 16 : 18} className="text-black" />
           </div>
-          <span className="text-[#1a1a1a] font-normal text-lg">Get Started</span>
+          <span className="text-[#1a1a1a] font-normal text-lg">Get Dripping</span>
         </button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default WelcomeScreen;
