@@ -2,7 +2,6 @@
 import React from 'react';
 import Button from './Button';
 import { Plus } from 'lucide-react';
-import CursorSmoke from './CursorSmoke';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -13,9 +12,6 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
     <div className="relative flex flex-col items-center justify-center h-full min-h-screen overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 -z-10"></div>
-      
-      {/* Cursor smoke effect */}
-      <CursorSmoke />
       
       {/* Floating product images */}
       <div className="floating-products">
