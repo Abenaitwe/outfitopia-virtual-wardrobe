@@ -4,6 +4,7 @@ import { Home, Camera, Shirt, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import UserMenu from '@/components/UserMenu';
+import Logo from './Logo';
 
 type NavigationProps = {
   currentTab: string;
@@ -50,7 +51,7 @@ const Navigation = ({ currentTab, onTabChange }: NavigationProps) => {
           onClick={() => handleTabClick('home')} 
           className={`flex flex-col items-center ${currentTab === 'home' ? 'text-purple-500' : 'text-foreground/60'}`}
         >
-          <Home size={24} />
+          <Logo className="w-6 h-6" />
           <span className="text-xs mt-1">Home</span>
         </button>
         
