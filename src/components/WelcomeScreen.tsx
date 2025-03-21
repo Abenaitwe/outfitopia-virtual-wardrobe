@@ -20,22 +20,22 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         {isMobile ? (
           // Mobile layout - focus on corners and top/bottom to avoid center content
           <>
-            {/* Top left */}
+            {/* Top left - men's outfit */}
             <div className="absolute top-[2%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/b80ac5fb-dbdc-41ec-b41a-364d1f7c7f1c.png" alt="Knitted cardigan" className="w-20 h-20 object-cover rounded-2xl" />
+              <img src="/lovable-uploads/fb921fc3-d545-454c-a0cf-157b3b12c71a.png" alt="Zipper polo" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Top right */}
+            {/* Top right - men's outfit */}
             <div className="absolute top-[2%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/15e13488-84f0-493f-8bcf-37912404bfb1.png" alt="Blue cardigan" className="w-20 h-20 object-cover rounded-2xl" />
+              <img src="/lovable-uploads/14518733-64cc-4f99-be2c-7ad571a43368.png" alt="Green polo" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom left - moved lower */}
+            {/* Bottom left - women's outfit */}
             <div className="absolute bottom-[10%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/d6caae61-8897-4469-9d50-0fdb7542b866.png" alt="Beige outfit" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom right - moved lower */}
+            {/* Bottom right - women's outfit */}
             <div className="absolute bottom-[10%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
               <img src="/lovable-uploads/1b0f0397-b4e9-4dc4-93ce-7eecab2247aa.png" alt="Elegant dress" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
