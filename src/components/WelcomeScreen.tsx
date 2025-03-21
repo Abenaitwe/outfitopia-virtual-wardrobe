@@ -22,22 +22,22 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <>
             {/* Top left - men's outfit */}
             <div className="absolute top-[2%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/fb921fc3-d545-454c-a0cf-157b3b12c71a.png" alt="Zipper polo" className="w-20 h-20 object-cover rounded-2xl" />
+              <img src="/lovable-uploads/fa3bc1ae-171c-4ece-afd7-1c37c903f081.png" alt="Blue cardigan outfit" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
             {/* Top right - men's outfit */}
             <div className="absolute top-[2%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/14518733-64cc-4f99-be2c-7ad571a43368.png" alt="Green polo" className="w-20 h-20 object-cover rounded-2xl" />
+              <img src="/lovable-uploads/3bf66d06-9092-454c-8037-263c1b16957e.png" alt="Knitwear outfit" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom left - women's outfit */}
-            <div className="absolute bottom-[10%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/d6caae61-8897-4469-9d50-0fdb7542b866.png" alt="Beige outfit" className="w-20 h-20 object-cover rounded-2xl" />
+            {/* Bottom left - women's outfit - positioned lower */}
+            <div className="absolute bottom-[5%] left-[2%] bg-white rounded-3xl p-3 shadow-md">
+              <img src="/lovable-uploads/c87c850b-e173-4851-bc0b-b5594c389b56.png" alt="Black top white pants" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
             
-            {/* Bottom right - women's outfit */}
-            <div className="absolute bottom-[10%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
-              <img src="/lovable-uploads/1b0f0397-b4e9-4dc4-93ce-7eecab2247aa.png" alt="Elegant dress" className="w-20 h-20 object-cover rounded-2xl" />
+            {/* Bottom right - women's outfit - positioned lower */}
+            <div className="absolute bottom-[5%] right-[2%] bg-white rounded-3xl p-3 shadow-md">
+              <img src="/lovable-uploads/ddb9e997-839c-4b0c-9180-e9c9c26c0964.png" alt="Pink top white pants" className="w-20 h-20 object-cover rounded-2xl" />
             </div>
           </>
         ) : (
