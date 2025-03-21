@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Plus } from 'lucide-react';
+import { LockKeyhole } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WelcomeScreenProps {
@@ -100,15 +100,17 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <h1 className={`${isMobile ? 'text-3xl' : 'text-4xl'} font-bold text-white`}>No Cap</h1>
         </div>
         
-        {/* Button - Updated to match the image style */}
+        {/* Button - Updated to exactly match the image */}
         <button 
           onClick={onStart}
-          className={`flex items-center justify-center gap-2 bg-[#e0f3e0] text-[#1a331a] font-medium ${isMobile ? 'py-3 px-6' : 'py-4 px-8'} 
-          rounded-full w-full border border-[#d1e9d1] shadow-lg hover:shadow-xl transition-all 
-          hover:bg-[#d5eed5] active:scale-[0.98]`}
+          className={`flex items-center justify-center gap-3 bg-gradient-to-r from-[#f0f1f6] to-[#e6e7ec] text-black font-medium ${isMobile ? 'py-3.5 px-6' : 'py-4 px-8'} 
+          rounded-full w-full border border-white/60 shadow-[0_8px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_10px_20px_rgba(0,0,0,0.15)] transition-all 
+          active:scale-[0.98]`}
         >
-          <Plus size={isMobile ? 18 : 20} className="text-[#1a331a]" /> 
-          Get Started
+          <div className="bg-white p-2 rounded-full flex items-center justify-center border border-[#e0e1e6]">
+            <LockKeyhole size={isMobile ? 16 : 18} className="text-black" />
+          </div>
+          <span className="text-[#1a1a1a] font-normal text-lg">Get Started</span>
         </button>
       </div>
     </div>
